@@ -178,7 +178,7 @@ export function SettingsApp() {
               <Row label="Data source" hint="Demo shows clearly labelled sample data. Native reads from the Pandatechs bridge on this computer.">
                 <div className="flex gap-1.5">{(["demo", "native"] as const).map((m) => <Button key={m} size="sm" variant={s.mode === m ? "hud-active" : "hud"} onClick={() => { setDesktop({ mode: m }); toast(m === "native" ? "Native mode: bridge not connected yet, panels show 'Not connected'." : "Demo mode: sample data.", "info"); }}>{m === "demo" ? "Demo" : "Native"}</Button>)}</div>
               </Row>
-              <Row label="Reset preferences"><Button size="sm" variant="danger" onClick={() => { localStorage.removeItem("pandatechs.desktop.v1"); localStorage.removeItem("pandatechs.notes.v1"); location.reload(); }}>Reset</Button></Row>
+              <Row label="Reset preferences"><Button size="sm" variant="danger" onClick={() => { localStorage.removeItem("pandatechs.desktop.v2"); localStorage.removeItem("pandatechs.notes.v1"); location.reload(); }}>Reset</Button></Row>
             </>
           )}
           {tab === "about" && (

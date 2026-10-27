@@ -99,10 +99,10 @@ export const desktopStore = createStore<DesktopState>(
     density: "comfortable",
     reduceMotion: false,
     mode: "demo",
-    assistantProvider: "demo",
+    assistantProvider: "brain",
     assistantModel: "",
     autoApproveReadOnly: true,
-    voiceEnabled: false,
+    voiceEnabled: true,
     sidebarCollapsed: false,
     dockFavorites: DEFAULT_DOCK,
     welcomeSeen: false,
@@ -122,7 +122,7 @@ export const desktopStore = createStore<DesktopState>(
     toast: null,
   },
   PERSISTED,
-  "pandatechs.desktop.v1",
+  "pandatechs.desktop.v2",
 );
 
 export function useDesktop<S>(selector: (s: DesktopState) => S): S {

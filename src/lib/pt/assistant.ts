@@ -114,7 +114,7 @@ export async function sendMessage(text: string) {
     } else {
       const message = e instanceof Error ? e.message : "Something went wrong.";
       patchBot({ content: message, error: true });
-      settle(provider.id === "demo" ? "error" : "offline");
+      settle("error");
     }
   } finally {
     chatStore.set({ streaming: false });

@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { clearChat, resolveProposal, sendMessage, stopStreaming, useChat } from "@/lib/pt/assistant";
 import { policyFor } from "@/lib/pt/policy";
 import { useAssistantProvider, useIntegration } from "@/lib/pt/integration";
-import { toast, useDesktop } from "@/lib/pt/store";
+import { setDesktop, toast, useDesktop } from "@/lib/pt/store";
+import { listen, listenSupported, stopListening, useListening } from "@/lib/pt/voice";
 import type { ActionProposal, ChatMessage } from "@/lib/pt/types";
 import { cn } from "@/lib/utils";
 
@@ -124,8 +125,7 @@ export function Composer({ autoFocus, showSuggestions = true }: { autoFocus?: bo
   const streaming = useChat((s) => s.streaming);
   const messages = useChat((s) => s.messages);
   const provider = useAssistantProvider();
-  const integration = useIntegration();
-  const voiceEnabled = useDesktop((s) => s.voiceEnabled);
+  const listening = useListening();
   const ref = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -166,24 +166,34 @@ export function Composer({ autoFocus, showSuggestions = true }: { autoFocus?: bo
               submit();
             }
           }}
-          placeholder="Ask P anything…"
+          placeholder={listening ? "Listening…" : "Talk or type to P…"}
           aria-label="Message P"
           className="max-h-28 min-h-6 flex-1 resize-none bg-transparent px-1 text-sm text-text outline-none placeholder:text-text-3"
         />
-        {voiceEnabled && (
-          <Button
-            size="icon-sm"
-            variant="quiet"
-            aria-label="Voice input"
-            onClick={() =>
-              integration.speech.available
-                ? undefined
-                : toast("Voice input is not available in this build.", "info")
+        <Button
+          size="icon-sm"
+          variant={listening ? "hud-active" : "quiet"}
+          aria-label={listening ? "Stop listening" : "Talk to P"}
+          aria-pressed={listening}
+          onClick={async () => {
+            if (listening) return stopListening();
+            if (!listenSupported()) return toast("Voice input works in Chrome or Edge. You can still type to P.", "info");
+            setDesktop({ assistantState: "listening" });
+            try {
+              const heard = await listen(setText);
+              setDesktop({ assistantState: "idle" });
+              if (heard) {
+                setText("");
+                void sendMessage(heard);
+              }
+            } catch (e) {
+              setDesktop({ assistantState: "idle" });
+              toast(e instanceof Error ? e.message : "Voice input failed.", "warning");
             }
-          >
-            <Mic />
-          </Button>
-        )}
+          }}
+        >
+          <Mic className={listening ? "text-violet animate-breathe" : undefined} />
+        </Button>
         {streaming ? (
           <Button size="icon-sm" variant="danger" onClick={stopStreaming} aria-label="Stop response">
             <Square />
@@ -195,7 +205,7 @@ export function Composer({ autoFocus, showSuggestions = true }: { autoFocus?: bo
         )}
       </div>
       <p className="mt-1.5 flex items-center justify-between px-1 text-[10px] text-text-3">
-        <span>{provider.sendsDataOffDevice ? "Messages are sent to a remote model" : "Runs on this device. Nothing leaves your machine."}</span>
+        <span>{provider.sendsDataOffDevice ? "Powered by Lovable AI. Messages are processed online." : "Runs on this device. Nothing leaves your machine."}</span>
         <button type="button" className="hover:text-text-2" onClick={clearChat}>New chat</button>
       </p>
     </div>
