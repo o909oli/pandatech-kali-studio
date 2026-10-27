@@ -104,7 +104,17 @@ machine:
 - Panel/theme: XFCE panel profile, GTK theme with the palette in `src/styles.css` (`--pt-*` tokens).
 Ship these as an installable package (`pandatechs-branding`), not by editing identity files.
 
-## 10. Acceptance checklist
+## 10. Location Center (consent-based sharing)
+
+Already working end to end on Lovable Cloud; no native bridge work is required.
+- Owner signs in with a real account (email/password or Google) inside the Location Center window. All requests and positions are private to that account (row-level security on `location_requests` and `location_pings`).
+- A request creates a 64-character random link `/locate/<token>`. The owner sends it by text message (`sms:` link), shares it during a phone call, or copies it.
+- The phone owner opens the link, reads who is asking, and taps **Allow and share**. The browser then asks for location permission. Positions are sent at most every 4 seconds while the page stays open (`src/lib/location/share.functions.ts`); the person can stop or decline at any time, and the owner can stop or delete the request.
+- A phone number or a phone call never reveals a location. Do not add carrier lookups, silent tracking or anything that collects position without the person's explicit consent.
+- Background sharing (page closed) needs a separate companion phone app with OS location permission and a visible stop control. Not part of this build.
+- Rules live in `src/lib/location/rules.ts` and are covered by `src/test/location-rules.test.ts`.
+
+## 11. Acceptance checklist
 
 - [ ] Every panel shows **Live** (not Sample) in native mode; failures show *Not connected* / *Error*.
 - [ ] Opening an app from the launcher starts the real app; the UI never says "opened" before the bridge confirms.

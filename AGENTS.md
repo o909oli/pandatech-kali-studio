@@ -20,3 +20,4 @@
 - Colours, gradients, motion live as tokens/utilities in `src/styles.css`; components use semantic classes only.
 - `src/test/branding.test.ts` must stay green: only Pandatechs branding in code, docs and assets.
 - P's AI calls (chat `/api/p-chat`, voice `/api/p-speech`) run only in `src/lib/p/*.server.ts`; model proposals pass `sanitizeProposal` before reaching the UI. Why: keys stay on the server and the model can never trigger an unlisted action.
+- Location sharing is consent-only: positions are written solely by the token-checked server functions in `src/lib/location/share.functions.ts` after the phone owner taps Allow; owner data is read through RLS as the signed-in user. Why: no location is ever collected without the person's explicit consent.
