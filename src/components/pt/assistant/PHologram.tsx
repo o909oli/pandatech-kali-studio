@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import hologram from "@/assets/p-hologram.webp";
 import talking from "@/assets/p-talking.mp4.asset.json";
 import idle from "@/assets/p-idle.mp4.asset.json";
+import talkingWebm from "@/assets/p-talking.webm.asset.json";
+import idleWebm from "@/assets/p-idle.webm.asset.json";
 import { useDesktop } from "@/lib/pt/store";
 import { useSpeaking } from "@/lib/pt/voice";
 import { cn } from "@/lib/utils";
@@ -41,7 +43,6 @@ export function PHologram({ className }: { className?: string | undefined }) {
       <img src={hologram} alt="" aria-hidden className={cn("absolute inset-0 h-full w-full object-cover transition-opacity duration-500", ready && !reduceMotion ? "opacity-0" : "opacity-100")} />
       <video
         ref={idleRef}
-        src={idle.url}
         muted
         loop
         playsInline
@@ -50,17 +51,22 @@ export function PHologram({ className }: { className?: string | undefined }) {
         onPlaying={() => setReady(true)}
         aria-hidden
         className={cn("absolute inset-0 h-full w-full object-cover transition-opacity duration-300", reduceMotion && "hidden")}
-      />
+      >
+        <source src={idleWebm.url} type="video/webm" />
+        <source src={idle.url} type="video/mp4" />
+      </video>
       <video
         ref={talkRef}
-        src={talking.url}
         muted
         loop
         playsInline
         preload="auto"
         aria-hidden
         className={cn("absolute inset-0 h-full w-full object-cover transition-opacity duration-300", talkingNow && !reduceMotion ? "opacity-100" : "opacity-0")}
-      />
+      >
+        <source src={talkingWebm.url} type="video/webm" />
+        <source src={talking.url} type="video/mp4" />
+      </video>
       <span className="sr-only">{talkingNow ? "P is speaking" : "P is listening"}</span>
     </div>
   );
