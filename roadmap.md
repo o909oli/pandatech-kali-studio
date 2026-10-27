@@ -7,7 +7,16 @@
 - [x] Boot, login, welcome screens
 - [x] Apps: terminal, files, editor, notes, monitor, network, security, applications, settings, workspaces
 - [x] P assistant full workspace matching the user's P interface reference
-- [x] P in motion: idle loop + talking loop (mouth moves while P responds/speaks); exact lip sync documented for Copilot
+- [x] P in motion: idle loop + talking loop; exact lip sync documented for Copilot
 - [x] Only Pandatechs branding in UI, code, docs, assets (test enforced)
 - [x] README + Copilot integration guide
-- [x] Tests (policy, branding), verify screens, ZIP download in Files
+- [x] Location Center (consent links)
+- [ ] Pandatechs Studio (IDE) per MASTER_IMPLEMENTATION_PROMPT
+  - [ ] Studio contracts, demo + native providers, store, policy ops
+  - [ ] Shell: title/menus, activity bar, resizable side + bottom panels, status bar
+  - [ ] Editor (CodeMirror): tabs, split, breadcrumbs, minimap, find/replace, folding, diagnostics, inline suggestions
+  - [ ] Explorer, Search, Source Control + diff, Run & Debug, Extensions + dev tools, Testing
+  - [ ] Terminal tabs/split/search + Problems, Output, Debug Console, Ports, Tasks
+  - [ ] P coding assistant: context chips, edit proposals with diff, task plans, approval card, providers (sample + online)
+  - [ ] Command Center, Settings, Notifications, Welcome + templates, first-run onboarding
+  - [ ] Tests (diff, search, fuzzy, policy), screenshots at 1366/1600/1920, Studio integration guide, ZIP v5

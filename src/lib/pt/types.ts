@@ -231,7 +231,15 @@ export type BridgeOperation =
   | "run_security_tool"
   | "run_elevated"
   | "send_external"
-  | "modify_boot_or_auth";
+  | "modify_boot_or_auth"
+  /* Pandatechs Studio */
+  | "read_workspace"
+  | "create_file"
+  | "write_file"
+  | "run_process"
+  | "git_change"
+  | "change_project_config"
+  | "install_extension";
 
 export interface ActionProposal {
   id: string;
