@@ -515,3 +515,64 @@
 .tok-type {
   color: oklch(0.8 0.1 245);
 }
+
+/* ---------- Location Center map ---------- */
+.pt-map {
+  background: var(--pt-deep);
+}
+.pt-map .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(195deg) brightness(0.78) contrast(1.15) saturate(0.55);
+}
+.pt-map .leaflet-control-zoom a,
+.pt-map .leaflet-control-attribution {
+  background: var(--pt-panel);
+  color: var(--pt-text-2);
+  border-color: var(--pt-line);
+}
+.pt-map .leaflet-control-attribution a {
+  color: var(--pt-cyan);
+}
+.pt-map-trail {
+  stroke: var(--pt-cyan);
+  filter: drop-shadow(0 0 4px var(--pt-cyan));
+}
+.pt-map-accuracy {
+  stroke: var(--pt-electric);
+  fill: var(--pt-electric);
+  fill-opacity: 0.12;
+}
+.pt-map-pin {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--pt-electric) 30%, transparent);
+  border: 2px solid var(--pt-electric);
+  box-shadow: 0 0 14px var(--pt-electric);
+}
+.pt-map-pin > span {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--pt-text);
+}
+.pt-map-pin.is-live {
+  border-color: var(--pt-success);
+  box-shadow: 0 0 16px var(--pt-success);
+  animation: pt-map-pulse 1.8s ease-out infinite;
+}
+.pt-map-pin.is-selected {
+  outline: 2px solid var(--pt-cyan);
+  outline-offset: 3px;
+}
+.pt-map-tip {
+  background: var(--pt-panel);
+  color: var(--pt-text);
+  border: 1px solid var(--pt-line-strong);
+}
+@keyframes pt-map-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--pt-success) 60%, transparent); }
+  100% { box-shadow: 0 0 0 14px transparent; }
+}
