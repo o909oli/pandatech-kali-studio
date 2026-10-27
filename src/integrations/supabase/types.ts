@@ -63,6 +63,7 @@ export type Database = {
           message: string | null
           owner_id: string
           phone: string | null
+          requester_name: string | null
           status: string
           stopped_at: string | null
           token: string
@@ -80,6 +81,7 @@ export type Database = {
           message?: string | null
           owner_id: string
           phone?: string | null
+          requester_name?: string | null
           status?: string
           stopped_at?: string | null
           token?: string
@@ -97,6 +99,7 @@ export type Database = {
           message?: string | null
           owner_id?: string
           phone?: string | null
+          requester_name?: string | null
           status?: string
           stopped_at?: string | null
           token?: string

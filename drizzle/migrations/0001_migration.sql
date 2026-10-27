@@ -1,0 +1,1 @@
+ALTER TABLE public.location_requests ADD COLUMN requester_name text;
