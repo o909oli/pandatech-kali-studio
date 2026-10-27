@@ -6,7 +6,7 @@ import { ASSISTANT_STATE_LABEL, PAvatar } from "@/components/pt/ui/Brand";
 import { Button } from "@/components/ui/button";
 import { clearChat, resolveProposal, sendMessage, stopStreaming, useChat } from "@/lib/pt/assistant";
 import { policyFor } from "@/lib/pt/policy";
-import { useAssistantProvider, useIntegration } from "@/lib/pt/integration";
+import { useAssistantProvider } from "@/lib/pt/integration";
 import { setDesktop, toast, useDesktop } from "@/lib/pt/store";
 import { listen, listenSupported, stopListening, useListening } from "@/lib/pt/voice";
 import type { ActionProposal, ChatMessage } from "@/lib/pt/types";
