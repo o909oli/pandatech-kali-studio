@@ -6,7 +6,7 @@ import { PAvatar, Wordmark } from "@/components/pt/ui/Brand";
 import { CATEGORY_LABEL } from "@/components/pt/shell/Overlays";
 import { TerminalSession } from "@/components/pt/apps/TerminalView";
 import {
-  ConnectionsWidget, MonitorWidget, NetworkWidget, OpenWindowsWidget, QuickToolsWidget, RecentFilesWidget,
+  ConnectionsWidget, MonitorWidget, NetworkWidget, OpenWindowsWidget, RecentFilesWidget,
 } from "@/components/pt/widgets/Widgets";
 import { Panel, SourceBadge } from "@/components/pt/ui/bits";
 import { useOpenApp } from "@/lib/pt/apps";
@@ -143,7 +143,6 @@ export function DesktopDashboard() {
             </li>
           ))}
         </ul>
-        <QuickToolsWidget className="mt-3 w-[26rem]" />
         <div className="mt-auto space-y-2.5">
           <Wordmark className="h-9 opacity-90" />
           <AskP />
