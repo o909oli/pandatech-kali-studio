@@ -106,7 +106,7 @@ export interface Place {
 /* ---------------- apps ---------------- */
 export type InternalAppId =
   | "terminal" | "files" | "editor" | "notes" | "monitor" | "network" | "security"
-  | "assistant" | "settings" | "applications" | "workspaces" | "browser";
+  | "assistant" | "settings" | "applications" | "workspaces" | "browser" | "location";
 
 export type AppCategory =
   | "favorites" | "information-gathering" | "vulnerability-analysis" | "web-application"

@@ -19,6 +19,7 @@ import { Route as ShellAssistantRouteImport } from './routes/_shell.assistant'
 import { Route as ShellDesktopRouteImport } from './routes/_shell.desktop'
 import { Route as ShellEditorRouteImport } from './routes/_shell.editor'
 import { Route as ShellFilesRouteImport } from './routes/_shell.files'
+import { Route as ShellLocationRouteImport } from './routes/_shell.location'
 import { Route as ShellMonitorRouteImport } from './routes/_shell.monitor'
 import { Route as ShellNetworkRouteImport } from './routes/_shell.network'
 import { Route as ShellNotesRouteImport } from './routes/_shell.notes'
@@ -78,6 +79,11 @@ const ShellFilesRoute = ShellFilesRouteImport.update({
   path: '/files',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellLocationRoute = ShellLocationRouteImport.update({
+  id: '/location',
+  path: '/location',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellMonitorRoute = ShellMonitorRouteImport.update({
   id: '/monitor',
   path: '/monitor',
@@ -134,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/desktop': typeof ShellDesktopRoute
   '/editor': typeof ShellEditorRoute
   '/files': typeof ShellFilesRoute
+  '/location': typeof ShellLocationRoute
   '/monitor': typeof ShellMonitorRoute
   '/network': typeof ShellNetworkRoute
   '/notes': typeof ShellNotesRoute
@@ -154,6 +161,7 @@ export interface FileRoutesByTo {
   '/desktop': typeof ShellDesktopRoute
   '/editor': typeof ShellEditorRoute
   '/files': typeof ShellFilesRoute
+  '/location': typeof ShellLocationRoute
   '/monitor': typeof ShellMonitorRoute
   '/network': typeof ShellNetworkRoute
   '/notes': typeof ShellNotesRoute
@@ -176,6 +184,7 @@ export interface FileRoutesById {
   '/_shell/desktop': typeof ShellDesktopRoute
   '/_shell/editor': typeof ShellEditorRoute
   '/_shell/files': typeof ShellFilesRoute
+  '/_shell/location': typeof ShellLocationRoute
   '/_shell/monitor': typeof ShellMonitorRoute
   '/_shell/network': typeof ShellNetworkRoute
   '/_shell/notes': typeof ShellNotesRoute
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/desktop'
     | '/editor'
     | '/files'
+    | '/location'
     | '/monitor'
     | '/network'
     | '/notes'
@@ -218,6 +228,7 @@ export interface FileRouteTypes {
     | '/desktop'
     | '/editor'
     | '/files'
+    | '/location'
     | '/monitor'
     | '/network'
     | '/notes'
@@ -239,6 +250,7 @@ export interface FileRouteTypes {
     | '/_shell/desktop'
     | '/_shell/editor'
     | '/_shell/files'
+    | '/_shell/location'
     | '/_shell/monitor'
     | '/_shell/network'
     | '/_shell/notes'
@@ -332,6 +344,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellFilesRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/location': {
+      id: '/_shell/location'
+      path: '/location'
+      fullPath: '/location'
+      preLoaderRoute: typeof ShellLocationRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/monitor': {
       id: '/_shell/monitor'
       path: '/monitor'
@@ -404,6 +423,7 @@ interface ShellRouteChildren {
   ShellDesktopRoute: typeof ShellDesktopRoute
   ShellEditorRoute: typeof ShellEditorRoute
   ShellFilesRoute: typeof ShellFilesRoute
+  ShellLocationRoute: typeof ShellLocationRoute
   ShellMonitorRoute: typeof ShellMonitorRoute
   ShellNetworkRoute: typeof ShellNetworkRoute
   ShellNotesRoute: typeof ShellNotesRoute
@@ -419,6 +439,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellDesktopRoute: ShellDesktopRoute,
   ShellEditorRoute: ShellEditorRoute,
   ShellFilesRoute: ShellFilesRoute,
+  ShellLocationRoute: ShellLocationRoute,
   ShellMonitorRoute: ShellMonitorRoute,
   ShellNetworkRoute: ShellNetworkRoute,
   ShellNotesRoute: ShellNotesRoute,

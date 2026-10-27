@@ -204,6 +204,7 @@ export const APPS: AppEntry[] = [
   { id: "notes", name: "Notes", category: "accessories", description: "Markdown notes", icon: "notebook", installed: true, launch: internal("notes") },
   { id: "monitor", name: "System Monitor", category: "system", description: "CPU, memory, disk, processes", icon: "activity", installed: true, launch: internal("monitor"), favorite: true },
   { id: "network", name: "Network Center", category: "information-gathering", description: "Interfaces, traffic, connections", icon: "network", installed: true, launch: internal("network"), favorite: true },
+  { id: "location", name: "Location Center", category: "system", description: "Consent-based live location sharing", icon: "map-pin", installed: true, launch: internal("location"), favorite: true },
   { id: "security", name: "Security Center", category: "vulnerability-analysis", description: "Firewall, updates, events", icon: "shield", installed: true, launch: internal("security"), favorite: true },
   { id: "assistant", name: "P - Personal AI", category: "ai", description: "Your on-device assistant", icon: "bot", installed: true, launch: internal("assistant"), favorite: true },
   { id: "settings", name: "Settings", category: "system", description: "Appearance, assistant, privacy", icon: "settings", installed: true, launch: internal("settings") },

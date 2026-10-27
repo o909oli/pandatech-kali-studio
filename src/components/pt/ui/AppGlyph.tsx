@@ -1,6 +1,6 @@
 import {
   Activity, Bot, Bug, Cable, ClipboardCheck, Code2, Cpu, Database, FileText, Folder, Globe, HardDrive, Hash,
-  KeyRound, LayoutGrid, MemoryStick, Network, NotebookPen, Radar, Radio, Search, Settings, Share2, Shield,
+  KeyRound, LayoutGrid, MapPin, MemoryStick, Network, NotebookPen, Radar, Radio, Search, Settings, Share2, Shield,
   Target, Terminal, Users, Waves, Wifi, Zap, type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,7 @@ export const ICONS: Record<string, LucideIcon> = {
   shield: Shield, bot: Bot, settings: Settings, layout: LayoutGrid, globe: Globe, radar: Radar, waves: Waves,
   search: Search, share: Share2, bug: Bug, clipboard: ClipboardCheck, zap: Zap, database: Database, target: Target,
   cable: Cable, key: KeyRound, hash: Hash, wifi: Wifi, radio: Radio, "hard-drive": HardDrive, memory: MemoryStick,
-  "file-text": FileText, cpu: Cpu, users: Users,
+  "map-pin": MapPin, "file-text": FileText, cpu: Cpu, users: Users,
 };
 
 /** A rounded app tile in the Pandatechs style: dark glass, cyan line, glowing glyph. */
