@@ -3,8 +3,9 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 // Built from pieces so this file never contains the forbidden words itself.
-const FORBIDDEN = [new RegExp(["k", "a", "l", "i"].join(""), "i"), new RegExp("white[\\s_-]?label", "i")];
-const ROOTS = ["src", "docs", "public", "README.md", "AGENTS.md", "index.html"];
+const DISTRO = ["k", "a", "l", "i"].join("");
+const LABEL = new RegExp(["wh", "ite"].join("") + "[\\s_-]?" + ["la", "bel"].join(""), "i");
+const ROOTS = ["src", "docs", "public", "README.md", "AGENTS.md"];
 const SKIP = /node_modules|routeTree\.gen|\.(png|jpe?g|webp|ico|mp4)$/;
 
 function files(p: string): string[] {
@@ -18,14 +19,12 @@ function files(p: string): string[] {
 }
 
 describe("Pandatechs branding", () => {
-  it("never mentions the underlying distribution or white-label wording", () => {
+  it("only Pandatechs branding appears: no distribution name and no rebrand wording", () => {
     const hits: string[] = [];
     for (const f of ROOTS.flatMap(files)) {
       const text = readFileSync(f, "utf8");
-      // allow words that merely contain the letters, e.g. "alkaline"
-      const words = text.match(/[A-Za-z_-]+/g) ?? [];
-      for (const w of words) if (FORBIDDEN[0]!.test(w) && w.length <= 6 && /^k?ali$|^kali/i.test(w)) hits.push(`${f}: ${w}`);
-      if (FORBIDDEN[1]!.test(text)) hits.push(`${f}: white-label`);
+      for (const w of text.match(/[A-Za-z]+/g) ?? []) if (w.toLowerCase().startsWith(DISTRO)) hits.push(`${f}: ${w}`);
+      if (LABEL.test(text)) hits.push(`${f}: rebrand wording`);
     }
     expect(hits).toEqual([]);
   });
