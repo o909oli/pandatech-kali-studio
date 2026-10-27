@@ -31,6 +31,14 @@ export const OPERATION_POLICY: Record<BridgeOperation, OperationPolicy> = {
   run_elevated: { modifies: true, permission: "Run a command with elevated privileges", requiresApproval: true },
   send_external: { modifies: false, permission: "Send data outside this machine", requiresApproval: true },
   modify_boot_or_auth: { modifies: true, permission: "Modify boot, login or authentication", requiresApproval: true },
+  /* Pandatechs Studio */
+  read_workspace: { modifies: false, permission: "Read files inside the open workspace", requiresApproval: false },
+  create_file: { modifies: true, permission: "Create a file in the workspace", requiresApproval: true },
+  write_file: { modifies: true, permission: "Edit a file in the workspace", requiresApproval: true },
+  run_process: { modifies: true, permission: "Run a process in the workspace terminal", requiresApproval: true },
+  git_change: { modifies: true, permission: "Change the Git repository (stage, commit, discard, push)", requiresApproval: true },
+  change_project_config: { modifies: true, permission: "Change project configuration", requiresApproval: true },
+  install_extension: { modifies: true, permission: "Install, update or remove an extension", requiresApproval: true },
 };
 
 export function policyFor(op: string): OperationPolicy | null {
