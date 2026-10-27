@@ -19,3 +19,4 @@
 - Desktop layout renders inside `Stage` (logical canvas ≥ 1600×900, scaled to the screen). Why: identical composition at 1366×768 through 1920×1080.
 - Colours, gradients, motion live as tokens/utilities in `src/styles.css`; components use semantic classes only.
 - `src/test/branding.test.ts` must stay green: only Pandatechs branding in code, docs and assets.
+- P's AI calls (chat `/api/p-chat`, voice `/api/p-speech`) run only in `src/lib/p/*.server.ts`; model proposals pass `sanitizeProposal` before reaching the UI. Why: keys stay on the server and the model can never trigger an unlisted action.

@@ -13,7 +13,7 @@ front end that GitHub Copilot connects to the real Linux (XFCE) machine.
 | Sign-in | `/login-preview` | Visual preview only (no password is checked or stored) |
 | Welcome | `/welcome` | First-run tour with P |
 | Desktop | `/desktop` | Category sidebar, shortcuts, terminal, monitor, network, recent files, windows, connections, Ask P bar |
-| P — Personal AI | `/assistant` | Moving hologram (talks while replying), chat, approvals, system overview, terminal, logs, code, shortcuts |
+| P — Personal AI | `/assistant` | Talk or type about anything; witty, natural voice; moving hologram; approvals; system overview, terminal, logs, code, shortcuts |
 | Terminal | `/terminal` | Safe demo shell (`help`, `ls`, `cd`, `cat`, `pt-info`, `explain`, `p <question>` …) |
 | Files | `/files` | Places, icon/list views, details pane, Pandatechs folder icon family |
 | Editor | `/editor` | Tabs, syntax colours, find, terminal panel, Ask P |
