@@ -16,12 +16,24 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        /* Pandatechs variants */
+        brand:
+          "bg-brand text-primary-foreground font-semibold glow hover:brightness-110 active:brightness-95",
+        hud: "border border-line bg-elevated/60 text-text-2 hover:border-line-strong hover:bg-surface/70 hover:text-text",
+        "hud-active": "border border-cyan/60 bg-electric/15 text-text selected-ring",
+        quiet: "text-text-2 hover:bg-surface/60 hover:text-text",
+        danger:
+          "border border-danger/50 bg-danger/15 text-danger hover:bg-danger/25 hover:text-text",
+        success: "border border-success/50 bg-success/15 text-success hover:bg-success/25",
       },
       size: {
         default: "h-9 px-4 py-2",
         sm: "h-8 rounded-md px-3 text-xs",
+        xs: "h-7 rounded-md px-2.5 text-xs [&_svg]:size-3.5",
         lg: "h-10 rounded-md px-8",
+        xl: "h-12 rounded-lg px-8 text-base",
         icon: "h-9 w-9",
+        "icon-sm": "h-7 w-7 [&_svg]:size-3.5",
       },
     },
     defaultVariants: {
