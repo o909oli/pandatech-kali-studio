@@ -3,6 +3,7 @@ import type { AssistantProvider, Integration, Sourced } from "./types";
 import { demoIntegration } from "./demo";
 import { nativeIntegration } from "./native";
 import { useDesktop } from "./store";
+import { brainAssistant } from "./brain";
 
 /**
  * Single switch for demo vs native. Components never branch on the mode —
@@ -21,6 +22,7 @@ export const DEMO_PROVIDER: AssistantProvider = demoIntegration.assistants["demo
 
 /** Assistant providers are independent of the data mode: demo + local model are always offered. */
 export const ASSISTANT_PROVIDERS: Record<string, AssistantProvider> = {
+  brain: brainAssistant,
   ...demoIntegration.assistants,
   ...nativeIntegration.assistants,
 };

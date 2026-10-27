@@ -26,6 +26,8 @@ import { Route as ShellSecurityRouteImport } from './routes/_shell.security'
 import { Route as ShellSettingsRouteImport } from './routes/_shell.settings'
 import { Route as ShellTerminalRouteImport } from './routes/_shell.terminal'
 import { Route as ShellWorkspacesRouteImport } from './routes/_shell.workspaces'
+import { Route as ApiPChatRouteImport } from './routes/api/p-chat'
+import { Route as ApiPSpeechRouteImport } from './routes/api/p-speech'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -111,6 +113,16 @@ const ShellWorkspacesRoute = ShellWorkspacesRouteImport.update({
   path: '/workspaces',
   getParentRoute: () => ShellRoute,
 } as any)
+const ApiPChatRoute = ApiPChatRouteImport.update({
+  id: '/api/p-chat',
+  path: '/api/p-chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPSpeechRoute = ApiPSpeechRouteImport.update({
+  id: '/api/p-speech',
+  path: '/api/p-speech',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -129,6 +141,8 @@ export interface FileRoutesByFullPath {
   '/settings': typeof ShellSettingsRoute
   '/terminal': typeof ShellTerminalRoute
   '/workspaces': typeof ShellWorkspacesRoute
+  '/api/p-chat': typeof ApiPChatRoute
+  '/api/p-speech': typeof ApiPSpeechRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -147,6 +161,8 @@ export interface FileRoutesByTo {
   '/settings': typeof ShellSettingsRoute
   '/terminal': typeof ShellTerminalRoute
   '/workspaces': typeof ShellWorkspacesRoute
+  '/api/p-chat': typeof ApiPChatRoute
+  '/api/p-speech': typeof ApiPSpeechRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -167,6 +183,8 @@ export interface FileRoutesById {
   '/_shell/settings': typeof ShellSettingsRoute
   '/_shell/terminal': typeof ShellTerminalRoute
   '/_shell/workspaces': typeof ShellWorkspacesRoute
+  '/api/p-chat': typeof ApiPChatRoute
+  '/api/p-speech': typeof ApiPSpeechRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -187,6 +205,8 @@ export interface FileRouteTypes {
     | '/settings'
     | '/terminal'
     | '/workspaces'
+    | '/api/p-chat'
+    | '/api/p-speech'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -205,6 +225,8 @@ export interface FileRouteTypes {
     | '/settings'
     | '/terminal'
     | '/workspaces'
+    | '/api/p-chat'
+    | '/api/p-speech'
   id:
     | '__root__'
     | '/'
@@ -224,6 +246,8 @@ export interface FileRouteTypes {
     | '/_shell/settings'
     | '/_shell/terminal'
     | '/_shell/workspaces'
+    | '/api/p-chat'
+    | '/api/p-speech'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -232,6 +256,8 @@ export interface RootRouteChildren {
   BootPreviewRoute: typeof BootPreviewRoute
   LoginPreviewRoute: typeof LoginPreviewRoute
   WelcomeRoute: typeof WelcomeRoute
+  ApiPChatRoute: typeof ApiPChatRoute
+  ApiPSpeechRoute: typeof ApiPSpeechRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -355,6 +381,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellWorkspacesRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/api/p-chat': {
+      id: '/api/p-chat'
+      path: '/api/p-chat'
+      fullPath: '/api/p-chat'
+      preLoaderRoute: typeof ApiPChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/p-speech': {
+      id: '/api/p-speech'
+      path: '/api/p-speech'
+      fullPath: '/api/p-speech'
+      preLoaderRoute: typeof ApiPSpeechRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -396,6 +436,8 @@ const rootRouteChildren: RootRouteChildren = {
   BootPreviewRoute: BootPreviewRoute,
   LoginPreviewRoute: LoginPreviewRoute,
   WelcomeRoute: WelcomeRoute,
+  ApiPChatRoute: ApiPChatRoute,
+  ApiPSpeechRoute: ApiPSpeechRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

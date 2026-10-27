@@ -73,24 +73,26 @@ changes to boot loader, login manager or authentication without a separate expli
 Security tools (`run_security_tool`) require a target and a stated authorisation from the user; run only
 against hosts the user owns or is permitted to test; log scope and time.
 
-## 7. Local model (P's brain)
+## 7. P's brain (conversation)
 
-`src/lib/pt/native/ollama.ts` already speaks the Ollama-compatible HTTP API (`/api/tags`, `/api/chat`, streaming).
-Nothing is assumed installed: Settings → P Assistant → *Check* reports availability and lists models.
-To let P *propose* actions with a local model, add a system prompt that returns JSON tool calls matching
-`ActionProposal`, validate with `zod` against `policy.ts`, and render through the same `ApprovalCard`.
-Keep `sendsDataOffDevice: false` for local engines; if you add a remote engine set it `true` (the UI warns).
+Default engine: **P Brain (Lovable AI)** — `src/lib/pt/brain.ts` (client) → `POST /api/p-chat` →
+`src/lib/p/p-chat.server.ts`. P's personality (calm, witty AI butler; talks about anything; short spoken replies)
+lives in the `persona()` prompt there. P can only *propose* actions through the `propose_action` tool;
+`src/lib/p/proposal.ts` re-validates every proposal against `policy.ts` before the UI shows the approval card.
+The client sends a short system snapshot (numbers only, never file contents) for context.
+
+Offline option: **Local model (Ollama)** in `src/lib/pt/native/ollama.ts` (Settings → P Assistant). To make it
+propose actions, add JSON tool calls matching `ProposalDraft` and pass them through `sanitizeProposal`.
 
 ## 8. P in motion, voice and lip sync
 
-`components/pt/assistant/PHologram.tsx` cross-fades two loops: `p-idle.mp4` (breathing, blinking) and
-`p-talking.mp4` (mouth moving). The talking loop plays while P is `responding` or while `useSpeaking()` is true.
-`lib/pt/voice.ts` uses the browser speech engine when *Settings → P speaks replies* is on.
-
-For the native build, replace `voice.ts` with a local TTS (e.g. Piper) and, for exact lip sync, emit viseme
-timings and drive a layered mouth sprite over `p-hologram.webp` instead of the loop. Speech input: implement
-`Integration.speech.listen` (e.g. whisper.cpp) and show the `listening` state (`assistantState`).
-Respect *Reduce motion*.
+- Voice out: `src/lib/pt/voice.ts` streams natural speech from `POST /api/p-speech` (Lovable AI, 24 kHz PCM),
+  falling back to the browser voice. Toggle: Settings → *P speaks replies* (on by default).
+- Voice in: the mic button in P's chat uses the browser's speech recognition (Chrome/Edge). For the native
+  build, replace `listen()` with a local engine (e.g. whisper.cpp) and keep the `listening` state.
+- Motion: `PHologram.tsx` cross-fades `p-idle` and `p-talking` loops; the talking loop runs while P replies or
+  speaks. For exact lip sync, drive a viseme rig from the TTS timings over `p-hologram.webp`. Respect *Reduce motion*.
+- Wake word ("Hey P") is not included; add it natively (e.g. openWakeWord) and call `listen()` on trigger.
 
 ## 9. Boot, login and welcome
 

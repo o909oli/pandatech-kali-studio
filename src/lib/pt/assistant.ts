@@ -23,8 +23,8 @@ const WELCOME: ChatMessage = {
   role: "assistant",
   createdAt: Date.now(),
   content:
-    "Hi, I'm **P**. I can explain things, find files, open apps and check on your system. " +
-    "Anything that changes your system or sends data away always waits for your approval.",
+    "Good to see you, boss. I'm **P**. Talk to me about anything, work or otherwise. " +
+    "If you want me to touch the system, I'll ask for your approval first.",
 };
 
 export const chatStore = createStore<ChatState>({
@@ -68,6 +68,7 @@ export function stopStreaming() {
 export async function sendMessage(text: string) {
   const trimmed = text.trim();
   if (!trimmed || chatStore.get().streaming) return;
+  stopSpeaking();
   const s = desktopStore.get();
   const provider = ASSISTANT_PROVIDERS[s.assistantProvider] ?? DEMO_PROVIDER;
 
@@ -114,7 +115,7 @@ export async function sendMessage(text: string) {
     } else {
       const message = e instanceof Error ? e.message : "Something went wrong.";
       patchBot({ content: message, error: true });
-      settle(provider.id === "demo" ? "error" : "offline");
+      settle("error");
     }
   } finally {
     chatStore.set({ streaming: false });
