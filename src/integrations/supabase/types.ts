@@ -14,7 +14,95 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      location_pings: {
+        Row: {
+          accuracy: number | null
+          id: string
+          lat: number
+          lng: number
+          recorded_at: string
+          request_id: string
+        }
+        Insert: {
+          accuracy?: number | null
+          id?: string
+          lat: number
+          lng: number
+          recorded_at?: string
+          request_id: string
+        }
+        Update: {
+          accuracy?: number | null
+          id?: string
+          lat?: number
+          lng?: number
+          recorded_at?: string
+          request_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "location_pings_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "location_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      location_requests: {
+        Row: {
+          consented_at: string | null
+          contact_name: string
+          created_at: string
+          expires_at: string
+          id: string
+          last_accuracy: number | null
+          last_lat: number | null
+          last_lng: number | null
+          last_seen_at: string | null
+          message: string | null
+          owner_id: string
+          phone: string | null
+          status: string
+          stopped_at: string | null
+          token: string
+        }
+        Insert: {
+          consented_at?: string | null
+          contact_name: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          last_accuracy?: number | null
+          last_lat?: number | null
+          last_lng?: number | null
+          last_seen_at?: string | null
+          message?: string | null
+          owner_id: string
+          phone?: string | null
+          status?: string
+          stopped_at?: string | null
+          token?: string
+        }
+        Update: {
+          consented_at?: string | null
+          contact_name?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          last_accuracy?: number | null
+          last_lat?: number | null
+          last_lng?: number | null
+          last_seen_at?: string | null
+          message?: string | null
+          owner_id?: string
+          phone?: string | null
+          status?: string
+          stopped_at?: string | null
+          token?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
