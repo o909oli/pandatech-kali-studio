@@ -13,9 +13,9 @@ export function highlight(code: string): string {
   s = s.replace(/(\/\/[^\n]*|#[^\n]*)/g, (m) => stash("tok-com", m));
   s = s.replace(/(`(?:\\.|[^`\\])*`|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')/g, (m) => stash("tok-str", m));
   s = esc(s);
-  s = s.replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="tok-num">$1</span>');
-  s = s.replace(KW, '<span class="tok-kw">$1</span>');
-  s = s.replace(/\b([A-Za-z_]\w*)(?=\()/g, '<span class="tok-fn">$1</span>');
-  s = s.replace(/\b([A-Z][A-Za-z0-9]*)\b(?![^<]*>)/g, '<span class="tok-type">$1</span>');
+  s = s.replace(/\b(\d+(?:\.\d+)?)\b/g, (m) => stash("tok-num", m));
+  s = s.replace(KW, (m) => stash("tok-kw", m));
+  s = s.replace(/\b([A-Za-z_]\w*)(?=\()/g, (m) => stash("tok-fn", m));
+  s = s.replace(/\b([A-Z][A-Za-z0-9]*)\b/g, (m) => stash("tok-type", m));
   return s.replace(/\u0000tk(\d+)\u0000/g, (_: string, i: string) => tokens[+i] ?? "");
 }
