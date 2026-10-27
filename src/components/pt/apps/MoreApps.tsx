@@ -102,8 +102,8 @@ export function WorkspacesApp() {
 
 /* --------------------------------- Settings -------------------------------- */
 const ACCENTS: { id: AccentId; label: string; css: string }[] = [
-  { id: "electric", label: "Electric Blue", css: "oklch(0.639 0.198 253.5)" },
-  { id: "cyan", label: "Cyan", css: "oklch(0.794 0.145 222.9)" },
+  { id: "electric", label: "Electric Blue", css: "oklch(0.598 0.21 256.8)" },
+  { id: "cyan", label: "Cyan", css: "oklch(0.683 0.168 244)" },
   { id: "ice", label: "Ice", css: "oklch(0.88 0.07 225)" },
   { id: "violet", label: "Violet", css: "oklch(0.661 0.189 285.5)" },
   { id: "emerald", label: "Emerald", css: "oklch(0.777 0.16 166.6)" },
