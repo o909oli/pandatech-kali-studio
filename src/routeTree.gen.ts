@@ -10,33 +10,228 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShellRouteImport } from './routes/_shell'
+import { Route as BootPreviewRouteImport } from './routes/boot-preview'
+import { Route as LoginPreviewRouteImport } from './routes/login-preview'
+import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as ShellApplicationsRouteImport } from './routes/_shell.applications'
+import { Route as ShellAssistantRouteImport } from './routes/_shell.assistant'
+import { Route as ShellDesktopRouteImport } from './routes/_shell.desktop'
+import { Route as ShellEditorRouteImport } from './routes/_shell.editor'
+import { Route as ShellFilesRouteImport } from './routes/_shell.files'
+import { Route as ShellMonitorRouteImport } from './routes/_shell.monitor'
+import { Route as ShellNetworkRouteImport } from './routes/_shell.network'
+import { Route as ShellNotesRouteImport } from './routes/_shell.notes'
+import { Route as ShellSecurityRouteImport } from './routes/_shell.security'
+import { Route as ShellSettingsRouteImport } from './routes/_shell.settings'
+import { Route as ShellTerminalRouteImport } from './routes/_shell.terminal'
+import { Route as ShellWorkspacesRouteImport } from './routes/_shell.workspaces'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShellRoute = ShellRouteImport.update({
+  id: '/_shell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BootPreviewRoute = BootPreviewRouteImport.update({
+  id: '/boot-preview',
+  path: '/boot-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginPreviewRoute = LoginPreviewRouteImport.update({
+  id: '/login-preview',
+  path: '/login-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShellApplicationsRoute = ShellApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellAssistantRoute = ShellAssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellDesktopRoute = ShellDesktopRouteImport.update({
+  id: '/desktop',
+  path: '/desktop',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellEditorRoute = ShellEditorRouteImport.update({
+  id: '/editor',
+  path: '/editor',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellFilesRoute = ShellFilesRouteImport.update({
+  id: '/files',
+  path: '/files',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellMonitorRoute = ShellMonitorRouteImport.update({
+  id: '/monitor',
+  path: '/monitor',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellNetworkRoute = ShellNetworkRouteImport.update({
+  id: '/network',
+  path: '/network',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellNotesRoute = ShellNotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellSecurityRoute = ShellSecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellSettingsRoute = ShellSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellTerminalRoute = ShellTerminalRouteImport.update({
+  id: '/terminal',
+  path: '/terminal',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellWorkspacesRoute = ShellWorkspacesRouteImport.update({
+  id: '/workspaces',
+  path: '/workspaces',
+  getParentRoute: () => ShellRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/boot-preview': typeof BootPreviewRoute
+  '/login-preview': typeof LoginPreviewRoute
+  '/welcome': typeof WelcomeRoute
+  '/applications': typeof ShellApplicationsRoute
+  '/assistant': typeof ShellAssistantRoute
+  '/desktop': typeof ShellDesktopRoute
+  '/editor': typeof ShellEditorRoute
+  '/files': typeof ShellFilesRoute
+  '/monitor': typeof ShellMonitorRoute
+  '/network': typeof ShellNetworkRoute
+  '/notes': typeof ShellNotesRoute
+  '/security': typeof ShellSecurityRoute
+  '/settings': typeof ShellSettingsRoute
+  '/terminal': typeof ShellTerminalRoute
+  '/workspaces': typeof ShellWorkspacesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/boot-preview': typeof BootPreviewRoute
+  '/login-preview': typeof LoginPreviewRoute
+  '/welcome': typeof WelcomeRoute
+  '/applications': typeof ShellApplicationsRoute
+  '/assistant': typeof ShellAssistantRoute
+  '/desktop': typeof ShellDesktopRoute
+  '/editor': typeof ShellEditorRoute
+  '/files': typeof ShellFilesRoute
+  '/monitor': typeof ShellMonitorRoute
+  '/network': typeof ShellNetworkRoute
+  '/notes': typeof ShellNotesRoute
+  '/security': typeof ShellSecurityRoute
+  '/settings': typeof ShellSettingsRoute
+  '/terminal': typeof ShellTerminalRoute
+  '/workspaces': typeof ShellWorkspacesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_shell': typeof ShellRouteWithChildren
+  '/boot-preview': typeof BootPreviewRoute
+  '/login-preview': typeof LoginPreviewRoute
+  '/welcome': typeof WelcomeRoute
+  '/_shell/applications': typeof ShellApplicationsRoute
+  '/_shell/assistant': typeof ShellAssistantRoute
+  '/_shell/desktop': typeof ShellDesktopRoute
+  '/_shell/editor': typeof ShellEditorRoute
+  '/_shell/files': typeof ShellFilesRoute
+  '/_shell/monitor': typeof ShellMonitorRoute
+  '/_shell/network': typeof ShellNetworkRoute
+  '/_shell/notes': typeof ShellNotesRoute
+  '/_shell/security': typeof ShellSecurityRoute
+  '/_shell/settings': typeof ShellSettingsRoute
+  '/_shell/terminal': typeof ShellTerminalRoute
+  '/_shell/workspaces': typeof ShellWorkspacesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/boot-preview'
+    | '/login-preview'
+    | '/welcome'
+    | '/applications'
+    | '/assistant'
+    | '/desktop'
+    | '/editor'
+    | '/files'
+    | '/monitor'
+    | '/network'
+    | '/notes'
+    | '/security'
+    | '/settings'
+    | '/terminal'
+    | '/workspaces'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/boot-preview'
+    | '/login-preview'
+    | '/welcome'
+    | '/applications'
+    | '/assistant'
+    | '/desktop'
+    | '/editor'
+    | '/files'
+    | '/monitor'
+    | '/network'
+    | '/notes'
+    | '/security'
+    | '/settings'
+    | '/terminal'
+    | '/workspaces'
+  id:
+    | '__root__'
+    | '/'
+    | '/_shell'
+    | '/boot-preview'
+    | '/login-preview'
+    | '/welcome'
+    | '/_shell/applications'
+    | '/_shell/assistant'
+    | '/_shell/desktop'
+    | '/_shell/editor'
+    | '/_shell/files'
+    | '/_shell/monitor'
+    | '/_shell/network'
+    | '/_shell/notes'
+    | '/_shell/security'
+    | '/_shell/settings'
+    | '/_shell/terminal'
+    | '/_shell/workspaces'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShellRoute: typeof ShellRouteWithChildren
+  BootPreviewRoute: typeof BootPreviewRoute
+  LoginPreviewRoute: typeof LoginPreviewRoute
+  WelcomeRoute: typeof WelcomeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +243,159 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_shell': {
+      id: '/_shell'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ShellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/boot-preview': {
+      id: '/boot-preview'
+      path: '/boot-preview'
+      fullPath: '/boot-preview'
+      preLoaderRoute: typeof BootPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login-preview': {
+      id: '/login-preview'
+      path: '/login-preview'
+      fullPath: '/login-preview'
+      preLoaderRoute: typeof LoginPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_shell/applications': {
+      id: '/_shell/applications'
+      path: '/applications'
+      fullPath: '/applications'
+      preLoaderRoute: typeof ShellApplicationsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/assistant': {
+      id: '/_shell/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof ShellAssistantRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/desktop': {
+      id: '/_shell/desktop'
+      path: '/desktop'
+      fullPath: '/desktop'
+      preLoaderRoute: typeof ShellDesktopRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/editor': {
+      id: '/_shell/editor'
+      path: '/editor'
+      fullPath: '/editor'
+      preLoaderRoute: typeof ShellEditorRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/files': {
+      id: '/_shell/files'
+      path: '/files'
+      fullPath: '/files'
+      preLoaderRoute: typeof ShellFilesRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/monitor': {
+      id: '/_shell/monitor'
+      path: '/monitor'
+      fullPath: '/monitor'
+      preLoaderRoute: typeof ShellMonitorRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/network': {
+      id: '/_shell/network'
+      path: '/network'
+      fullPath: '/network'
+      preLoaderRoute: typeof ShellNetworkRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/notes': {
+      id: '/_shell/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof ShellNotesRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/security': {
+      id: '/_shell/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof ShellSecurityRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/settings': {
+      id: '/_shell/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ShellSettingsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/terminal': {
+      id: '/_shell/terminal'
+      path: '/terminal'
+      fullPath: '/terminal'
+      preLoaderRoute: typeof ShellTerminalRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/workspaces': {
+      id: '/_shell/workspaces'
+      path: '/workspaces'
+      fullPath: '/workspaces'
+      preLoaderRoute: typeof ShellWorkspacesRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
+interface ShellRouteChildren {
+  ShellApplicationsRoute: typeof ShellApplicationsRoute
+  ShellAssistantRoute: typeof ShellAssistantRoute
+  ShellDesktopRoute: typeof ShellDesktopRoute
+  ShellEditorRoute: typeof ShellEditorRoute
+  ShellFilesRoute: typeof ShellFilesRoute
+  ShellMonitorRoute: typeof ShellMonitorRoute
+  ShellNetworkRoute: typeof ShellNetworkRoute
+  ShellNotesRoute: typeof ShellNotesRoute
+  ShellSecurityRoute: typeof ShellSecurityRoute
+  ShellSettingsRoute: typeof ShellSettingsRoute
+  ShellTerminalRoute: typeof ShellTerminalRoute
+  ShellWorkspacesRoute: typeof ShellWorkspacesRoute
+}
+
+const ShellRouteChildren: ShellRouteChildren = {
+  ShellApplicationsRoute: ShellApplicationsRoute,
+  ShellAssistantRoute: ShellAssistantRoute,
+  ShellDesktopRoute: ShellDesktopRoute,
+  ShellEditorRoute: ShellEditorRoute,
+  ShellFilesRoute: ShellFilesRoute,
+  ShellMonitorRoute: ShellMonitorRoute,
+  ShellNetworkRoute: ShellNetworkRoute,
+  ShellNotesRoute: ShellNotesRoute,
+  ShellSecurityRoute: ShellSecurityRoute,
+  ShellSettingsRoute: ShellSettingsRoute,
+  ShellTerminalRoute: ShellTerminalRoute,
+  ShellWorkspacesRoute: ShellWorkspacesRoute,
+}
+
+const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShellRoute: ShellRouteWithChildren,
+  BootPreviewRoute: BootPreviewRoute,
+  LoginPreviewRoute: LoginPreviewRoute,
+  WelcomeRoute: WelcomeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
