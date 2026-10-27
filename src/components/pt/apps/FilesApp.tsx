@@ -144,7 +144,7 @@ export function FilesApp({ onSource }: { onSource?: (s: string) => void }) {
       <footer className="flex h-7 items-center gap-4 border-t border-line bg-deep/50 px-3 text-[11px] text-text-3">
         <span>{entries.length} items</span>
         {sel && <span className="truncate text-text-2">{sel.path}</span>}
-        <span className="ml-auto">Delete always asks P-style approval</span>
+        <span className="ml-auto">Deleting always asks for your approval</span>
       </footer>
     </div>
   );
