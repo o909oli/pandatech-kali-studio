@@ -10,7 +10,7 @@ export const Route = createFileRoute("/_shell/workspaces")({
 
 function Page() {
   return (
-    <AppWindow title="Workspaces" icon="layout">
+    <AppWindow title="Workspaces" icon="clipboard">
       <WorkspacesApp />
     </AppWindow>
   );

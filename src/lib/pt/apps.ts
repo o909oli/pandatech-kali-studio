@@ -24,7 +24,7 @@ export const INTERNAL_APPS: Record<InternalAppId, InternalApp> = {
   assistant: { id: "assistant", title: "P - Personal AI", path: "/assistant", icon: "bot", subtitle: "Assistant workspace" },
   settings: { id: "settings", title: "Settings", path: "/settings", icon: "settings", subtitle: "Preferences" },
   applications: { id: "applications", title: "Applications", path: "/applications", icon: "layout", subtitle: "All apps" },
-  workspaces: { id: "workspaces", title: "Workspaces", path: "/workspaces", icon: "layout", subtitle: "Projects" },
+  workspaces: { id: "workspaces", title: "Workspaces", path: "/workspaces", icon: "clipboard", subtitle: "Projects" },
   browser: { id: "browser", title: "Browser", path: "/applications", icon: "globe", subtitle: "Web" },
 };
 
