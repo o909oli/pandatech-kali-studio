@@ -8,7 +8,7 @@ const Body = z.object({ text: z.string().min(1).max(1200) });
 
 /** Streams P's voice (24 kHz PCM over SSE) straight through to the browser. */
 export async function handlePSpeech(request: Request): Promise<Response> {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) return Response.json({ error: "Voice is not configured." }, { status: 500 });
   let text: string;
   try {

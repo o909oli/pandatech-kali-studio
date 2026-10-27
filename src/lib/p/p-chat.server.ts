@@ -64,7 +64,7 @@ function friendlyError(err: unknown): { status: number; message: string } {
 }
 
 export async function handlePChat(request: Request): Promise<Response> {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) return Response.json({ error: "P's AI is not configured." }, { status: 500 });
 
   let body: z.infer<typeof Body>;
