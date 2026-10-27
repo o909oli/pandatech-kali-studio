@@ -89,7 +89,7 @@ const PERSISTED: (keyof DesktopState)[] = [
 ];
 
 export const DEFAULT_DOCK = [
-  "files", "terminal", "browser", "editor", "monitor", "network", "security", "assistant", "workspaces", "settings",
+  "files", "terminal", "browser", "editor", "monitor", "network", "location", "security", "assistant", "workspaces", "settings",
 ];
 
 export const desktopStore = createStore<DesktopState>(

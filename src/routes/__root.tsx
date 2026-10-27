@@ -123,6 +123,21 @@ function ThemeSync() {
   const reduceMotion = useDesktop((s) => s.reduceMotion);
   useEffect(() => {
     desktopStore.hydrate();
+    // One-time: put the new Location Center on docks saved before it existed.
+    try {
+      if (!window.localStorage.getItem("pt:dock-location")) {
+        const favs = desktopStore.get().dockFavorites;
+        if (!favs.includes("location")) {
+          const at = favs.indexOf("network");
+          const next = [...favs];
+          next.splice(at >= 0 ? at + 1 : next.length, 0, "location");
+          desktopStore.set({ dockFavorites: next });
+        }
+        window.localStorage.setItem("pt:dock-location", "1");
+      }
+    } catch {
+      /* storage unavailable */
+    }
   }, []);
   useEffect(() => {
     document.documentElement.setAttribute("data-accent", accent);

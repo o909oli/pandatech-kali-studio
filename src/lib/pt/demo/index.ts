@@ -105,7 +105,7 @@ function demoNetworkSnapshot(): NetworkState {
 const APP_ALIASES: Record<string, string> = {
   terminal: "terminal", files: "files", "file manager": "files", editor: "editor", notes: "notes",
   monitor: "monitor", "system monitor": "monitor", network: "network", security: "security",
-  settings: "settings", browser: "browser", workspaces: "workspaces", projects: "workspaces",
+  settings: "settings", browser: "browser", workspaces: "workspaces", projects: "workspaces", "location center": "location", location: "location", "share location": "location",
 };
 
 function intent(text: string): AssistantReply {

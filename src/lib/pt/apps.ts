@@ -25,6 +25,7 @@ export const INTERNAL_APPS: Record<InternalAppId, InternalApp> = {
   settings: { id: "settings", title: "Settings", path: "/settings", icon: "settings", subtitle: "Preferences" },
   applications: { id: "applications", title: "Applications", path: "/applications", icon: "layout", subtitle: "All apps" },
   workspaces: { id: "workspaces", title: "Workspaces", path: "/workspaces", icon: "clipboard", subtitle: "Projects" },
+  location: { id: "location", title: "Location Center", path: "/location", icon: "map-pin", subtitle: "Consent-based sharing" },
   browser: { id: "browser", title: "Browser", path: "/applications", icon: "globe", subtitle: "Web" },
 };
 

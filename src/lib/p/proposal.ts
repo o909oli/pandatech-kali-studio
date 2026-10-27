@@ -7,7 +7,7 @@ export const PROPOSABLE_OPERATIONS = (Object.keys(OPERATION_POLICY) as BridgeOpe
 );
 
 export const INTERNAL_APP_IDS = [
-  "terminal", "files", "editor", "notes", "monitor", "network", "security", "assistant", "settings", "applications", "workspaces",
+  "terminal", "files", "editor", "notes", "monitor", "network", "security", "assistant", "settings", "applications", "workspaces", "location",
 ] as const;
 
 export interface ProposalDraft {

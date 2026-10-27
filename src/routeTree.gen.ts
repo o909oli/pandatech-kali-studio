@@ -19,6 +19,7 @@ import { Route as ShellAssistantRouteImport } from './routes/_shell.assistant'
 import { Route as ShellDesktopRouteImport } from './routes/_shell.desktop'
 import { Route as ShellEditorRouteImport } from './routes/_shell.editor'
 import { Route as ShellFilesRouteImport } from './routes/_shell.files'
+import { Route as ShellLocationRouteImport } from './routes/_shell.location'
 import { Route as ShellMonitorRouteImport } from './routes/_shell.monitor'
 import { Route as ShellNetworkRouteImport } from './routes/_shell.network'
 import { Route as ShellNotesRouteImport } from './routes/_shell.notes'
@@ -28,6 +29,7 @@ import { Route as ShellTerminalRouteImport } from './routes/_shell.terminal'
 import { Route as ShellWorkspacesRouteImport } from './routes/_shell.workspaces'
 import { Route as ApiPChatRouteImport } from './routes/api/p-chat'
 import { Route as ApiPSpeechRouteImport } from './routes/api/p-speech'
+import { Route as LocateTokenRouteImport } from './routes/locate.$token'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -78,6 +80,11 @@ const ShellFilesRoute = ShellFilesRouteImport.update({
   path: '/files',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellLocationRoute = ShellLocationRouteImport.update({
+  id: '/location',
+  path: '/location',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellMonitorRoute = ShellMonitorRouteImport.update({
   id: '/monitor',
   path: '/monitor',
@@ -123,6 +130,11 @@ const ApiPSpeechRoute = ApiPSpeechRouteImport.update({
   path: '/api/p-speech',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LocateTokenRoute = LocateTokenRouteImport.update({
+  id: '/locate/$token',
+  path: '/locate/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -134,6 +146,7 @@ export interface FileRoutesByFullPath {
   '/desktop': typeof ShellDesktopRoute
   '/editor': typeof ShellEditorRoute
   '/files': typeof ShellFilesRoute
+  '/location': typeof ShellLocationRoute
   '/monitor': typeof ShellMonitorRoute
   '/network': typeof ShellNetworkRoute
   '/notes': typeof ShellNotesRoute
@@ -143,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/workspaces': typeof ShellWorkspacesRoute
   '/api/p-chat': typeof ApiPChatRoute
   '/api/p-speech': typeof ApiPSpeechRoute
+  '/locate/$token': typeof LocateTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -154,6 +168,7 @@ export interface FileRoutesByTo {
   '/desktop': typeof ShellDesktopRoute
   '/editor': typeof ShellEditorRoute
   '/files': typeof ShellFilesRoute
+  '/location': typeof ShellLocationRoute
   '/monitor': typeof ShellMonitorRoute
   '/network': typeof ShellNetworkRoute
   '/notes': typeof ShellNotesRoute
@@ -163,6 +178,7 @@ export interface FileRoutesByTo {
   '/workspaces': typeof ShellWorkspacesRoute
   '/api/p-chat': typeof ApiPChatRoute
   '/api/p-speech': typeof ApiPSpeechRoute
+  '/locate/$token': typeof LocateTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -176,6 +192,7 @@ export interface FileRoutesById {
   '/_shell/desktop': typeof ShellDesktopRoute
   '/_shell/editor': typeof ShellEditorRoute
   '/_shell/files': typeof ShellFilesRoute
+  '/_shell/location': typeof ShellLocationRoute
   '/_shell/monitor': typeof ShellMonitorRoute
   '/_shell/network': typeof ShellNetworkRoute
   '/_shell/notes': typeof ShellNotesRoute
@@ -185,6 +202,7 @@ export interface FileRoutesById {
   '/_shell/workspaces': typeof ShellWorkspacesRoute
   '/api/p-chat': typeof ApiPChatRoute
   '/api/p-speech': typeof ApiPSpeechRoute
+  '/locate/$token': typeof LocateTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -198,6 +216,7 @@ export interface FileRouteTypes {
     | '/desktop'
     | '/editor'
     | '/files'
+    | '/location'
     | '/monitor'
     | '/network'
     | '/notes'
@@ -207,6 +226,7 @@ export interface FileRouteTypes {
     | '/workspaces'
     | '/api/p-chat'
     | '/api/p-speech'
+    | '/locate/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -218,6 +238,7 @@ export interface FileRouteTypes {
     | '/desktop'
     | '/editor'
     | '/files'
+    | '/location'
     | '/monitor'
     | '/network'
     | '/notes'
@@ -227,6 +248,7 @@ export interface FileRouteTypes {
     | '/workspaces'
     | '/api/p-chat'
     | '/api/p-speech'
+    | '/locate/$token'
   id:
     | '__root__'
     | '/'
@@ -239,6 +261,7 @@ export interface FileRouteTypes {
     | '/_shell/desktop'
     | '/_shell/editor'
     | '/_shell/files'
+    | '/_shell/location'
     | '/_shell/monitor'
     | '/_shell/network'
     | '/_shell/notes'
@@ -248,6 +271,7 @@ export interface FileRouteTypes {
     | '/_shell/workspaces'
     | '/api/p-chat'
     | '/api/p-speech'
+    | '/locate/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -258,6 +282,7 @@ export interface RootRouteChildren {
   WelcomeRoute: typeof WelcomeRoute
   ApiPChatRoute: typeof ApiPChatRoute
   ApiPSpeechRoute: typeof ApiPSpeechRoute
+  LocateTokenRoute: typeof LocateTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -332,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellFilesRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/location': {
+      id: '/_shell/location'
+      path: '/location'
+      fullPath: '/location'
+      preLoaderRoute: typeof ShellLocationRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/monitor': {
       id: '/_shell/monitor'
       path: '/monitor'
@@ -395,6 +427,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPSpeechRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/locate/$token': {
+      id: '/locate/$token'
+      path: '/locate/$token'
+      fullPath: '/locate/$token'
+      preLoaderRoute: typeof LocateTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -404,6 +443,7 @@ interface ShellRouteChildren {
   ShellDesktopRoute: typeof ShellDesktopRoute
   ShellEditorRoute: typeof ShellEditorRoute
   ShellFilesRoute: typeof ShellFilesRoute
+  ShellLocationRoute: typeof ShellLocationRoute
   ShellMonitorRoute: typeof ShellMonitorRoute
   ShellNetworkRoute: typeof ShellNetworkRoute
   ShellNotesRoute: typeof ShellNotesRoute
@@ -419,6 +459,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellDesktopRoute: ShellDesktopRoute,
   ShellEditorRoute: ShellEditorRoute,
   ShellFilesRoute: ShellFilesRoute,
+  ShellLocationRoute: ShellLocationRoute,
   ShellMonitorRoute: ShellMonitorRoute,
   ShellNetworkRoute: ShellNetworkRoute,
   ShellNotesRoute: ShellNotesRoute,
@@ -438,6 +479,7 @@ const rootRouteChildren: RootRouteChildren = {
   WelcomeRoute: WelcomeRoute,
   ApiPChatRoute: ApiPChatRoute,
   ApiPSpeechRoute: ApiPSpeechRoute,
+  LocateTokenRoute: LocateTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
