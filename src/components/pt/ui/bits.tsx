@@ -105,7 +105,7 @@ export function Meter({ value, tone = "electric", className }: { value: number; 
   );
 }
 
-export function Ring({ value, size = 64, label, tone = "cyan" }: { value: number; size?: number | undefined; label?: ReactNode | undefined; tone?: "cyan" | "electric" | "violet" | "success" | "warning" }) {
+export function Ring({ value, size = 64, label, tone = "cyan" }: { value: number; size?: number | undefined; label?: ReactNode | undefined; tone?: "cyan" | "electric" | "violet" | "success" | "warning" | "ice" }) {
   const r = 26;
   const c = 2 * Math.PI * r;
   return (
