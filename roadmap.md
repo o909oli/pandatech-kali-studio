@@ -10,4 +10,4 @@
 - [x] P in motion: idle loop + talking loop (mouth moves while P responds/speaks); exact lip sync documented for Copilot
 - [x] Only Pandatechs branding in UI, code, docs, assets (test enforced)
 - [x] README + Copilot integration guide
-- [ ] Tests (policy, branding), verify screens, ZIP download in Files
+- [x] Tests (policy, branding), verify screens, ZIP download in Files
