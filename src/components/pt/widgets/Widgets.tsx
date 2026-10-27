@@ -21,8 +21,8 @@ export function SystemOverview({ className }: { className?: string | undefined }
         <div className="grid grid-cols-4 gap-2 text-center">
           {[
             { l: "CPU", v: m.cpuPercent, s: `${m.cores} cores`, t: "cyan" as const },
-            { l: "RAM", v: (m.memUsedBytes / m.memTotalBytes) * 100, s: `${formatBytes(m.memUsedBytes, 1)}`, t: "electric" as const },
-            { l: "Disk", v: (m.rootUsedBytes / m.rootTotalBytes) * 100, s: `${formatBytes(m.rootUsedBytes, 0)}`, t: "violet" as const },
+            { l: "RAM", v: (m.memUsedBytes / m.memTotalBytes) * 100, s: `${formatBytes(m.memUsedBytes, 1)}`, t: "violet" as const },
+            { l: "Disk", v: (m.rootUsedBytes / m.rootTotalBytes) * 100, s: `${formatBytes(m.rootUsedBytes, 0)}`, t: "ice" as const },
             { l: "Load", v: Math.min(100, m.loadAvg[0] * 100), s: m.loadAvg[0].toFixed(2), t: "success" as const },
           ].map((r) => (
             <div key={r.l} className="flex flex-col items-center gap-1">

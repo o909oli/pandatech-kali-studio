@@ -25,8 +25,8 @@ export function MonitorApp() {
         <div className="grid grid-cols-4 gap-3">
           {[
             { l: "CPU", v: d.cpuPercent, s: `${d.cores} cores`, t: "cyan" as const },
-            { l: "Memory", v: (d.memUsedBytes / d.memTotalBytes) * 100, s: `${formatBytes(d.memUsedBytes)} used`, t: "electric" as const },
-            { l: "Disk /", v: (d.rootUsedBytes / d.rootTotalBytes) * 100, s: `${formatBytes(d.rootUsedBytes, 0)} used`, t: "violet" as const },
+            { l: "Memory", v: (d.memUsedBytes / d.memTotalBytes) * 100, s: `${formatBytes(d.memUsedBytes)} used`, t: "violet" as const },
+            { l: "Disk /", v: (d.rootUsedBytes / d.rootTotalBytes) * 100, s: `${formatBytes(d.rootUsedBytes, 0)} used`, t: "ice" as const },
             { l: "Uptime", v: 100, s: formatUptime(d.uptimeSec), t: "success" as const },
           ].map((r) => (
             <div key={r.l} className="panel flex items-center gap-3 p-3">
@@ -37,8 +37,8 @@ export function MonitorApp() {
         </div>
         <Panel title="CPU usage" source={m.result?.source} bodyClassName="p-3"><Sparkline data={d.cpuHistory} max={100} height={150} className="!h-full" /></Panel>
         <div className="grid grid-cols-2 gap-3">
-          <Panel title="Memory" source={m.result?.source} bodyClassName="p-3"><Sparkline data={d.memHistory} max={100} tone="electric" height={120} className="!h-full" /></Panel>
-          <Panel title="Disk I/O" source={m.result?.source} bodyClassName="p-3"><Sparkline data={d.diskIoHistory} max={100} tone="violet" height={120} className="!h-full" /></Panel>
+          <Panel title="Memory" source={m.result?.source} bodyClassName="p-3"><Sparkline data={d.memHistory} max={100} tone="violet" height={120} className="!h-full" /></Panel>
+          <Panel title="Disk I/O" source={m.result?.source} bodyClassName="p-3"><Sparkline data={d.diskIoHistory} max={100} tone="warning" height={120} className="!h-full" /></Panel>
         </div>
       </div>
       <Panel title="Processes" source={p.result?.source} bodyClassName="scroll-thin overflow-auto" actions={<><button type="button" className={cn("text-[10px]", sort === "cpuPercent" ? "text-cyan" : "text-text-3")} onClick={() => setSort("cpuPercent")}>CPU</button><button type="button" className={cn("ml-2 text-[10px]", sort === "memPercent" ? "text-cyan" : "text-text-3")} onClick={() => setSort("memPercent")}>MEM</button></>}>
