@@ -460,7 +460,7 @@ export const demoStudio: StudioIntegration = {
     status: async () => sample(SAMPLE_GIT),
     original: async (path) => sample(ORIGINALS[path] ?? SAMPLE_FILES[path] ?? ""),
   },
-  terminal: { profiles: async () => sample(SAMPLE_PROFILES) },
+  terminal: { profiles: async () => sample(SAMPLE_PROFILES), run: async (line, cwd) => sample(simulateTerminal(line, cwd)) },
   debug: {
     configs: async () => sample(SAMPLE_LAUNCH),
     script: async (id) => sample(SAMPLE_DEBUG[id] ?? []),
@@ -469,7 +469,93 @@ export const demoStudio: StudioIntegration = {
     list: async () => sample(SAMPLE_EXTENSIONS),
     tools: async () => sample(SAMPLE_TOOLS),
   },
-  tests: { list: async () => sample(SAMPLE_TESTS) },
+  tests: {
+    list: async () => sample(SAMPLE_TESTS),
+    run: async (ids) => sample(SAMPLE_TESTS.filter((t) => ids.includes(t.id)).map((t) => ({ ...t, ...SAMPLE_TEST_RESULTS[t.id] }))),
+  },
   execute: async (action: ProposedAction) =>
     honest(`Demo mode: "${action.title}" was approved but not performed. The native integration runs it for real.`),
 };
+
+/* ---------------- simulated workspace terminal (sample output only) ---------------- */
+const TEST_OUTPUT: TerminalLine[] = [
+  { text: " RUN  v1.6.0 /home/panda/Projects/pandatechs-portal (sample)", tone: "dim" },
+  { text: " ❯ src/lib/metrics.test.ts (4 tests | 2 failed)", tone: "out" },
+  { text: "   × averages cpu load", tone: "err" },
+  { text: "     → TypeError: Cannot read properties of undefined (reading 'cpu')", tone: "err" },
+  { text: "       at averageLoad (src/lib/metrics.ts:10:25)", tone: "err" },
+  { text: "   × returns 0 for no samples", tone: "err" },
+  { text: "     → Expected 0, received NaN", tone: "err" },
+  { text: "   ✓ finds the peak", tone: "ok" },
+  { text: "   ✓ formats percentages", tone: "ok" },
+  { text: " Test Files  1 failed (1)", tone: "err" },
+  { text: "      Tests  2 failed | 2 passed (4)", tone: "out" },
+];
+
+export function simulateTerminal(line: string, cwd: string): TerminalOutput {
+  const cmd = line.trim();
+  const rel = (p: string) => (p.startsWith(STUDIO_ROOT) ? p.slice(STUDIO_ROOT.length + 1) : p);
+  const dirOf = (dir: string) => {
+    const names = new Set<string>();
+    for (const f of Object.keys(SAMPLE_FILES)) if (f.startsWith(dir + "/")) names.add(f.slice(dir.length + 1).split("/")[0]!);
+    return [...names].sort();
+  };
+  if (!cmd) return { lines: [] };
+  const [head, ...rest] = cmd.split(/\s+/);
+  switch (head) {
+    case "help":
+      return { lines: [{ text: "Sample workspace shell: ls, cd, pwd, cat, git status, git log, git branch, npm test, npm run dev, node -v, python3 --version, clear, echo", tone: "dim" }] };
+    case "clear":
+      return { lines: [], clear: true };
+    case "pwd":
+      return { lines: [{ text: cwd }] };
+    case "echo":
+      return { lines: [{ text: rest.join(" ") }] };
+    case "ls": {
+      const target = rest[0] ? `${cwd}/${rest[0]}`.replace(/\/\.$/, "") : cwd;
+      const list = dirOf(target);
+      return list.length ? { lines: [{ text: list.join("  "), tone: "out" }] } : { lines: [{ text: `ls: cannot access '${rest[0] ?? "."}': No such file or directory`, tone: "err" }] };
+    }
+    case "cd": {
+      const to = !rest[0] || rest[0] === "~" ? STUDIO_ROOT : rest[0] === ".." ? cwd.slice(0, cwd.lastIndexOf("/")) || "/" : `${cwd}/${rest[0]}`;
+      return dirOf(to).length || to === STUDIO_ROOT ? { lines: [], cwd: to } : { lines: [{ text: `cd: ${rest[0]}: No such file or directory`, tone: "err" }] };
+    }
+    case "cat": {
+      const f = SAMPLE_FILES[`${cwd}/${rest[0] ?? ""}`];
+      if (rest[0]?.startsWith(".env")) return { lines: [{ text: "cat: hidden in the sample shell (credential file)", tone: "dim" }] };
+      return f !== undefined ? { lines: f.split("\n").map((text) => ({ text })) } : { lines: [{ text: `cat: ${rest[0] ?? ""}: No such file or directory`, tone: "err" }] };
+    }
+    case "git": {
+      if (rest[0] === "status")
+        return {
+          lines: [
+            { text: `On branch ${SAMPLE_GIT.branch}` },
+            { text: "Your branch is ahead of 'origin/" + SAMPLE_GIT.branch + "' by 2 commits." },
+            { text: "Changes not staged for commit:", tone: "out" },
+            ...SAMPLE_GIT.changes.filter((c) => !c.staged).map((c) => ({ text: `\t${c.kind}:   ${rel(c.path)}`, tone: "err" as const })),
+            { text: "Changes to be committed:", tone: "out" },
+            ...SAMPLE_GIT.changes.filter((c) => c.staged).map((c) => ({ text: `\t${c.kind}:   ${rel(c.path)}`, tone: "ok" as const })),
+          ],
+        };
+      if (rest[0] === "log") return { lines: SAMPLE_GIT.history.map((h) => ({ text: `${h.hash} ${h.message}` })) };
+      if (rest[0] === "branch") return { lines: SAMPLE_GIT.branches.map((b) => ({ text: `${b === SAMPLE_GIT.branch ? "* " : "  "}${b}`, tone: b === SAMPLE_GIT.branch ? ("ok" as const) : undefined })) };
+      return { lines: [{ text: `git ${rest.join(" ")}: not simulated in the sample shell`, tone: "dim" }] };
+    }
+    case "npm":
+    case "npx":
+      if (/test|vitest/.test(cmd)) return { lines: TEST_OUTPUT };
+      if (/run dev/.test(cmd)) return { lines: [{ text: "  VITE v5 ready (sample)", tone: "ok" }, { text: "  ➜  Local:   http://localhost:5173/", tone: "out" }] };
+      if (/run build/.test(cmd)) return { lines: [{ text: "src/lib/metrics.ts(10,25): error TS2532: Object is possibly 'undefined'.", tone: "err" }, { text: "Build failed (sample output)", tone: "err" }] };
+      return { lines: [{ text: `${cmd}: not simulated in the sample shell`, tone: "dim" }] };
+    case "node":
+      return { lines: [{ text: "Not detected — the sample shell does not know which runtimes are installed.", tone: "dim" }] };
+    case "python3":
+    case "python":
+      if (rest.includes("scripts/report.py")) return { lines: [{ text: "Traceback (most recent call last):", tone: "err" }, { text: '  File "scripts/report.py", line 13, in summarize', tone: "err" }, { text: "ZeroDivisionError: division by zero", tone: "err" }] };
+      return { lines: [{ text: "Not detected — the sample shell does not know which runtimes are installed.", tone: "dim" }] };
+    case "sudo":
+      return { lines: [{ text: "sudo is not available in the sample shell. Elevated commands always need your approval in the native build.", tone: "err" }] };
+    default:
+      return { lines: [{ text: `${head}: command not found (sample shell)`, tone: "err" }] };
+  }
+}
