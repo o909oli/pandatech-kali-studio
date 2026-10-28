@@ -30,6 +30,7 @@ import { Route as ShellWorkspacesRouteImport } from './routes/_shell.workspaces'
 import { Route as ApiPChatRouteImport } from './routes/api/p-chat'
 import { Route as ApiPCodeRouteImport } from './routes/api/p-code'
 import { Route as ApiPSpeechRouteImport } from './routes/api/p-speech'
+import { Route as ApiPStatusRouteImport } from './routes/api/p-status'
 import { Route as LocateTokenRouteImport } from './routes/locate.$token'
 
 const IndexRoute = IndexRouteImport.update({
@@ -136,6 +137,11 @@ const ApiPSpeechRoute = ApiPSpeechRouteImport.update({
   path: '/api/p-speech',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPStatusRoute = ApiPStatusRouteImport.update({
+  id: '/api/p-status',
+  path: '/api/p-status',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LocateTokenRoute = LocateTokenRouteImport.update({
   id: '/locate/$token',
   path: '/locate/$token',
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/api/p-chat': typeof ApiPChatRoute
   '/api/p-code': typeof ApiPCodeRoute
   '/api/p-speech': typeof ApiPSpeechRoute
+  '/api/p-status': typeof ApiPStatusRoute
   '/locate/$token': typeof LocateTokenRoute
 }
 export interface FileRoutesByTo {
@@ -186,6 +193,7 @@ export interface FileRoutesByTo {
   '/api/p-chat': typeof ApiPChatRoute
   '/api/p-code': typeof ApiPCodeRoute
   '/api/p-speech': typeof ApiPSpeechRoute
+  '/api/p-status': typeof ApiPStatusRoute
   '/locate/$token': typeof LocateTokenRoute
 }
 export interface FileRoutesById {
@@ -211,6 +219,7 @@ export interface FileRoutesById {
   '/api/p-chat': typeof ApiPChatRoute
   '/api/p-code': typeof ApiPCodeRoute
   '/api/p-speech': typeof ApiPSpeechRoute
+  '/api/p-status': typeof ApiPStatusRoute
   '/locate/$token': typeof LocateTokenRoute
 }
 export interface FileRouteTypes {
@@ -236,6 +245,7 @@ export interface FileRouteTypes {
     | '/api/p-chat'
     | '/api/p-code'
     | '/api/p-speech'
+    | '/api/p-status'
     | '/locate/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -259,6 +269,7 @@ export interface FileRouteTypes {
     | '/api/p-chat'
     | '/api/p-code'
     | '/api/p-speech'
+    | '/api/p-status'
     | '/locate/$token'
   id:
     | '__root__'
@@ -283,6 +294,7 @@ export interface FileRouteTypes {
     | '/api/p-chat'
     | '/api/p-code'
     | '/api/p-speech'
+    | '/api/p-status'
     | '/locate/$token'
   fileRoutesById: FileRoutesById
 }
@@ -295,6 +307,7 @@ export interface RootRouteChildren {
   ApiPChatRoute: typeof ApiPChatRoute
   ApiPCodeRoute: typeof ApiPCodeRoute
   ApiPSpeechRoute: typeof ApiPSpeechRoute
+  ApiPStatusRoute: typeof ApiPStatusRoute
   LocateTokenRoute: typeof LocateTokenRoute
 }
 
@@ -447,6 +460,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPSpeechRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/p-status': {
+      id: '/api/p-status'
+      path: '/api/p-status'
+      fullPath: '/api/p-status'
+      preLoaderRoute: typeof ApiPStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/locate/$token': {
       id: '/locate/$token'
       path: '/locate/$token'
@@ -500,6 +520,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPChatRoute: ApiPChatRoute,
   ApiPCodeRoute: ApiPCodeRoute,
   ApiPSpeechRoute: ApiPSpeechRoute,
+  ApiPStatusRoute: ApiPStatusRoute,
   LocateTokenRoute: LocateTokenRoute,
 }
 export const routeTree = rootRouteImport
