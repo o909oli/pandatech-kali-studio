@@ -119,5 +119,7 @@ export async function handlePChat(request: Request): Promise<Response> {
   return withLovableAiGatewayRunIdHeader(
     new Response(stream, { headers: { "Content-Type": "application/x-ndjson; charset=utf-8", "Cache-Control": "no-cache" } }),
     runIdFetch,
+    undefined,
+    { waitForUpstreamHeaders: conn.kind === "lovable" },
   );
 }
