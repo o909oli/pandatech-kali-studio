@@ -6,7 +6,7 @@
 import type { ActionResult, Sourced } from "../types";
 import type {
   DebugStep, Diagnostic, DevTool, Extension, FileEntry, GitStatus, LaunchConfig, LanguageId,
-  ProjectTemplate, ProposedAction, RecentWorkspace, StudioIntegration, TerminalProfile, TestCase, Workspace,
+  ProjectTemplate, ProposedAction, RecentWorkspace, StudioIntegration, TerminalLine, TerminalOutput, TerminalProfile, TestCase, Workspace,
 } from "../studio/types";
 
 export const STUDIO_ROOT = "/home/panda/Projects/pandatechs-portal";
