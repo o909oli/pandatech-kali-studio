@@ -1,4 +1,3 @@
-import { createOpenAI } from "@ai-sdk/openai";
 import { APICallError, stepCountIs, streamText, tool, type ModelMessage } from "ai";
 import { z } from "zod";
 import {
@@ -6,10 +5,8 @@ import {
   getLovableAiGatewayRunId,
   withLovableAiGatewayRunIdHeader,
 } from "./run-id.server";
+import { chatModel, chatProviderOptions, NOT_CONFIGURED, resolveAiConnection } from "./ai-config.server";
 import { INTERNAL_APP_IDS, PROPOSABLE_OPERATIONS, sanitizeProposal } from "./proposal";
-
-const GATEWAY_URL = "https://ai.gateway.lovable.dev";
-const MODEL = "openai/gpt-6-astra";
 
 const Body = z.object({
   messages: z
@@ -64,8 +61,8 @@ function friendlyError(err: unknown): { status: number; message: string } {
 }
 
 export async function handlePChat(request: Request): Promise<Response> {
-  const apiKey = process.env["LOVABLE_API_KEY"];
-  if (!apiKey) return Response.json({ error: "P's AI is not configured." }, { status: 500 });
+  const conn = resolveAiConnection();
+  if (!conn) return Response.json({ error: NOT_CONFIGURED }, { status: 503 });
 
   let body: z.infer<typeof Body>;
   try {
@@ -75,15 +72,9 @@ export async function handlePChat(request: Request): Promise<Response> {
   }
 
   const runIdFetch = createLovableAiGatewayRunIdFetch(getLovableAiGatewayRunId(request));
-  const provider = createOpenAI({
-    baseURL: `${GATEWAY_URL}/v1`,
-    apiKey,
-    headers: { "Lovable-API-Key": apiKey, "X-Lovable-AIG-SDK": "vercel-ai-sdk" },
-    fetch: runIdFetch.fetch,
-  });
 
   const result = streamText({
-    model: provider.responses(MODEL),
+    model: chatModel(conn, conn.kind === "lovable" ? runIdFetch.fetch : undefined),
     instructions: persona(body.context),
     messages: body.messages as ModelMessage[],
     abortSignal: request.signal,
@@ -101,15 +92,7 @@ export async function handlePChat(request: Request): Promise<Response> {
         execute: async () => ({ status: "shown_to_user_awaiting_approval" }),
       }),
     },
-    providerOptions: {
-      openai: {
-        forceReasoning: true,
-        reasoningEffort: "low",
-        reasoningSummary: "auto",
-        store: false,
-        include: ["reasoning.encrypted_content"],
-      },
-    },
+    providerOptions: chatProviderOptions(conn) as never,
   });
 
   const stream = new ReadableStream<Uint8Array>({
@@ -136,5 +119,7 @@ export async function handlePChat(request: Request): Promise<Response> {
   return withLovableAiGatewayRunIdHeader(
     new Response(stream, { headers: { "Content-Type": "application/x-ndjson; charset=utf-8", "Cache-Control": "no-cache" } }),
     runIdFetch,
+    undefined,
+    { waitForUpstreamHeaders: conn.kind === "lovable" },
   );
 }

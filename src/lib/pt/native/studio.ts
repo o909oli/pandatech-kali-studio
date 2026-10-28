@@ -33,9 +33,9 @@ export const nativeStudio: StudioIntegration = {
   },
   diagnostics: async () => off(),
   git: { status: async () => off(), original: async () => off() },
-  terminal: { profiles: async () => off() },
+  terminal: { profiles: async () => off(), run: async () => off() },
   debug: { configs: async () => off(), script: async () => off() },
   extensions: { list: async () => off(), tools: async () => off() },
-  tests: { list: async () => off() },
+  tests: { list: async () => off(), run: async () => off() },
   execute: async () => refuse(),
 };

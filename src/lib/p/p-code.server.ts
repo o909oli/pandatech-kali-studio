@@ -1,4 +1,3 @@
-import { createOpenAI } from "@ai-sdk/openai";
 import { APICallError, streamText, type ModelMessage } from "ai";
 import { z } from "zod";
 import {
@@ -6,9 +5,8 @@ import {
   getLovableAiGatewayRunId,
   withLovableAiGatewayRunIdHeader,
 } from "./run-id.server";
+import { chatModel, chatProviderOptions, NOT_CONFIGURED, resolveAiConnection } from "./ai-config.server";
 
-const GATEWAY_URL = "https://ai.gateway.lovable.dev";
-const MODEL = "openai/gpt-6-astra";
 
 const Body = z.object({
   task: z.string().max(40),
@@ -48,8 +46,8 @@ function friendly(err: unknown) {
 }
 
 export async function handlePCode(request: Request): Promise<Response> {
-  const apiKey = process.env["LOVABLE_API_KEY"];
-  if (!apiKey) return Response.json({ error: "P's AI is not configured." }, { status: 500 });
+  const conn = resolveAiConnection();
+  if (!conn) return Response.json({ error: NOT_CONFIGURED }, { status: 503 });
   let body: z.infer<typeof Body>;
   try {
     body = Body.parse(await request.json());
@@ -57,22 +55,16 @@ export async function handlePCode(request: Request): Promise<Response> {
     return Response.json({ error: "Invalid request." }, { status: 400 });
   }
   const runIdFetch = createLovableAiGatewayRunIdFetch(getLovableAiGatewayRunId(request));
-  const provider = createOpenAI({
-    baseURL: `${GATEWAY_URL}/v1`,
-    apiKey,
-    headers: { "Lovable-API-Key": apiKey, "X-Lovable-AIG-SDK": "vercel-ai-sdk" },
-    fetch: runIdFetch.fetch,
-  });
   const messages: ModelMessage[] = [
     ...body.history.slice(0, -1).map((m) => ({ role: m.role, content: m.content }) as ModelMessage),
     { role: "user", content: body.prompt || body.history.at(-1)?.content || body.task },
   ];
   const result = streamText({
-    model: provider.responses(MODEL),
+    model: chatModel(conn, conn.kind === "lovable" ? runIdFetch.fetch : undefined),
     instructions: instructions(body),
     messages,
     abortSignal: request.signal,
-    providerOptions: { openai: { reasoningEffort: "low", store: false } },
+    providerOptions: chatProviderOptions(conn) as never,
   });
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
@@ -92,5 +84,7 @@ export async function handlePCode(request: Request): Promise<Response> {
   return withLovableAiGatewayRunIdHeader(
     new Response(stream, { headers: { "Content-Type": "application/x-ndjson; charset=utf-8", "Cache-Control": "no-cache" } }),
     runIdFetch,
+    undefined,
+    { waitForUpstreamHeaders: conn.kind === "lovable" },
   );
 }

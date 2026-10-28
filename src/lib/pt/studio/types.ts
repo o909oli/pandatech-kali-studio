@@ -101,6 +101,16 @@ export interface TerminalSessionInfo {
   cwd: string;
 }
 
+export interface TerminalLine {
+  text: string;
+  tone?: "out" | "err" | "dim" | "ok" | "cmd" | undefined;
+}
+export interface TerminalOutput {
+  lines: TerminalLine[];
+  clear?: boolean | undefined;
+  cwd?: string | undefined;
+}
+
 /* ---------------- debug ---------------- */
 export interface LaunchConfig {
   id: string;
@@ -347,7 +357,11 @@ export interface StudioIntegration {
     /** HEAD version of a file, for diffs */
     original(path: string): Promise<Sourced<string>>;
   };
-  terminal: { profiles(): Promise<Sourced<TerminalProfile[]>> };
+  terminal: {
+    profiles(): Promise<Sourced<TerminalProfile[]>>;
+    /** demo: simulated output; native: the line is written to the user's real PTY */
+    run(line: string, cwd: string): Promise<Sourced<TerminalOutput>>;
+  };
   debug: {
     configs(): Promise<Sourced<LaunchConfig[]>>;
     script(configId: string): Promise<Sourced<DebugStep[]>>;
@@ -356,7 +370,11 @@ export interface StudioIntegration {
     list(): Promise<Sourced<Extension[]>>;
     tools(): Promise<Sourced<DevTool[]>>;
   };
-  tests: { list(): Promise<Sourced<TestCase[]>> };
+  tests: {
+    list(): Promise<Sourced<TestCase[]>>;
+    /** results come from the real test runner in native mode */
+    run(ids: string[]): Promise<Sourced<TestCase[]>>;
+  };
   /** every effectful action goes through the approved-action bridge */
   execute(action: ProposedAction): Promise<ActionResult>;
 }
