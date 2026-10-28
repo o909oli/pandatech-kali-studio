@@ -8,7 +8,7 @@ import { uid } from "../format";
 import { commandAction, makeAction } from "./actions";
 import { getStudio } from "./integration";
 import {
-  approveAndRun, baseName, getStudioState, log, notify, relPath, setFileContent, setStudio, studioStore,
+  approveAndRun, baseName, getStudioState, log, notify, openFile, relPath, setFileContent, setStudio, studioStore,
 } from "./store";
 import type { ProposedAction, TerminalLine } from "./types";
 
@@ -172,7 +172,7 @@ export async function startDebug(configId = getStudioState().launchId) {
 function revealStep(i: number) {
   const step = getStudioState().debugSteps[i];
   if (!step) return;
-  void import("./store").then(({ openFile }) => openFile(step.path));
+  openFile(step.path);
 }
 
 export function debugStep(kind: "over" | "into" | "out" | "continue") {
